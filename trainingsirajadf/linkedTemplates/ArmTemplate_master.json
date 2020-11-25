@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobMetadataSQLConnection'"
 		},
+		"DLSTargetProviderFunction_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'DLSTargetProviderFunction'"
+		},
+		"DLSTargetProviderFunction_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://dlstargetprovider20201125160234.azurewebsites.net"
+		},
 		"TrainingAzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://trainingsirajkv.vault.azure.net/"
@@ -44,6 +52,12 @@
 					},
 					"BlobMetadataSQLConnection_connectionString": {
 						"value": "[parameters('BlobMetadataSQLConnection_connectionString')]"
+					},
+					"DLSTargetProviderFunction_functionKey": {
+						"value": "[parameters('DLSTargetProviderFunction_functionKey')]"
+					},
+					"DLSTargetProviderFunction_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('DLSTargetProviderFunction_properties_typeProperties_functionAppUrl')]"
 					},
 					"TrainingAzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('TrainingAzureKeyVault1_properties_typeProperties_baseUrl')]"

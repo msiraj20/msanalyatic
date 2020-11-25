@@ -8,6 +8,12 @@
 		"BlobMetadataSQLConnection_connectionString": {
 			"value": ""
 		},
+		"DLSTargetProviderFunction_functionKey": {
+			"value": ""
+		},
+		"DLSTargetProviderFunction_properties_typeProperties_functionAppUrl": {
+			"value": "https://dlstargetprovider20201125160234.azurewebsites.net"
+		},
 		"TrainingAzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://trainingsirajkv.vault.azure.net/"
 		}
