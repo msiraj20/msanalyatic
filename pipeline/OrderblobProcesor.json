@@ -48,7 +48,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Azure Function1",
+							"name": "DLS Retrive Function",
 							"type": "AzureFunctionActivity",
 							"dependsOn": [],
 							"policy": {
