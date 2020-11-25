@@ -1,0 +1,11 @@
+{
+	"name": "TrainingAzureKeyVault1",
+	"properties": {
+		"description": "TrainingAzureKeyVault1",
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://trainingsirajkv.vault.azure.net/"
+		}
+	}
+}
