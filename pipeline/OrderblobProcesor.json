@@ -27,6 +27,26 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Iterate Processable blobs",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Load Processable Blobs",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Load Processable Blobs').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true
+				}
 			}
 		],
 		"concurrency": 1,
