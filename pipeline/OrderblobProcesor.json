@@ -1,0 +1,8 @@
+{
+	"name": "OrderblobProcesor",
+	"properties": {
+		"description": "This pipline process incoming  internet order blob files",
+		"concurrency": 1,
+		"annotations": []
+	}
+}
