@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Load Processable Blobs').output.value",
+						"value": "@activity('Load Processable Blobs').output.values",
 						"type": "Expression"
 					},
 					"isSequential": true,
