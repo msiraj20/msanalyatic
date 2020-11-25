@@ -61,7 +61,15 @@
 							"userProperties": [],
 							"typeProperties": {
 								"functionName": "DLSTargetProvider",
-								"method": "POST"
+								"method": "POST",
+								"headers": {
+									"Content-Type": "application/json",
+									"Accept": "application/json"
+								},
+								"body": {
+									"value": "@concat('{\"blobPath\":\"', item().Path, '\", \"blobName\":\"', item().BlobName, '\"}')",
+									"type": "Expression"
+								}
 							},
 							"linkedServiceName": {
 								"referenceName": "DLSTargetProviderFunction",
