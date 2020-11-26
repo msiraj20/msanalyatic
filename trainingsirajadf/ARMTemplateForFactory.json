@@ -90,7 +90,7 @@
 							"isSequential": true,
 							"activities": [
 								{
-									"name": "DLS Retrive Function",
+									"name": "Prepare DLS Target Info",
 									"type": "AzureFunctionActivity",
 									"dependsOn": [],
 									"policy": {
