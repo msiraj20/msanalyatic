@@ -274,7 +274,7 @@
 								"storedProcedureParameters": {
 									"dlsLocation": {
 										"value": {
-											"value": "@concat(activity('Prepare DLS Target Info').output).targetOrganizedFullPath,'/',activity('Prepare DLS Target Info').output.targetOrganizedFileName)",
+											"value": "@concat(activity('Prepare DLS Target Info').output.targetOrganizedFullPath, '/',activity('Prepare DLS Target Info').output.targetOrganizedFileName)",
 											"type": "Expression"
 										},
 										"type": "String"
