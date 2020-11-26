@@ -6,34 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "trainingsirajadf"
-		},
-		"BlobMetadataSQLConnection_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'BlobMetadataSQLConnection'"
-		},
-		"DLSTargetProviderFunction_functionKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'functionKey' of 'DLSTargetProviderFunction'"
-		},
-		"OrganizedDataLakeConnection_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'OrganizedDataLakeConnection'"
-		},
-		"OrdersBlobStorageConnection_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'OrdersBlobStorageConnection'"
-		},
-		"DLSTargetProviderFunction_properties_typeProperties_functionAppUrl": {
-			"type": "string",
-			"defaultValue": "https://traniningfunctionappsiraj.azurewebsites.net"
-		},
-		"TrainingAzureKeyVault1_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://trainingsirajkv.vault.azure.net/"
-		},
-		"OrganizedDataLakeConnection_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://traniningsirajdls.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -68,8 +40,7 @@
 							},
 							"dataset": {
 								"referenceName": "BlobMetadataDataset",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							},
 							"firstRowOnly": false
 						}
@@ -346,245 +317,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/BlobMetadataDataset')]",
-				"[concat(variables('factoryId'), '/linkedServices/DLSTargetProviderFunction')]",
-				"[concat(variables('factoryId'), '/datasets/OrdersblobStoageDataSet')]",
-				"[concat(variables('factoryId'), '/datasets/OrganizedDLSDataset')]",
-				"[concat(variables('factoryId'), '/linkedServices/BlobMetadataSQLConnection')]"
+				"[concat(variables('factoryId'), '/datasets/OrdersblobStoageDataSet')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BlobMetadataDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "BlobMetadataSQLConnection",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "RecordId",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "RecordDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "BlobId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "BlobName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DisplayName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Path",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastModified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Size",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "MediaType",
-						"type": "nvarchar"
-					},
-					{
-						"name": "IsFolder",
-						"type": "bit"
-					},
-					{
-						"name": "ETag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FileLocator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ProcessStatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DLSTargetLocation",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "BlobMetadata"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/BlobMetadataSQLConnection')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/BlobMetadataSQLConnection')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('BlobMetadataSQLConnection_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DLSTargetProviderFunction')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureFunction",
-				"typeProperties": {
-					"functionAppUrl": "[parameters('DLSTargetProviderFunction_properties_typeProperties_functionAppUrl')]",
-					"functionKey": {
-						"type": "SecureString",
-						"value": "[parameters('DLSTargetProviderFunction_functionKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TrainingAzureKeyVault1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "TrainingAzureKeyVault1",
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('TrainingAzureKeyVault1_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OrganizedDataLakeConnection')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('OrganizedDataLakeConnection_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('OrganizedDataLakeConnection_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OrganizedDLSDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OrganizedDataLakeConnection",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"fileSystemName": {
-						"type": "string"
-					},
-					"folder": {
-						"type": "string"
-					},
-					"fileName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().fileName",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().folder",
-							"type": "Expression"
-						},
-						"fileSystem": {
-							"value": "@dataset().fileSystemName",
-							"type": "Expression"
-						}
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "orderid",
-						"type": "INT32"
-					},
-					{
-						"name": "orderdate",
-						"type": "UTF8"
-					},
-					{
-						"name": "customer",
-						"type": "INT32"
-					},
-					{
-						"name": "product",
-						"type": "INT32"
-					},
-					{
-						"name": "units",
-						"type": "INT32"
-					},
-					{
-						"name": "billingaddress",
-						"type": "UTF8"
-					},
-					{
-						"name": "remarks",
-						"type": "UTF8"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OrganizedDataLakeConnection')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OrdersBlobStorageConnection')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('OrdersBlobStorageConnection_connectionString')]"
-				}
-			},
-			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/OrdersblobStoageDataSet')]",
@@ -660,9 +394,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/OrdersBlobStorageConnection')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
