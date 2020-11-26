@@ -11,11 +11,17 @@
 		"DLSTargetProviderFunction_functionKey": {
 			"value": ""
 		},
+		"OrganizedDataLakeConnection_accountKey": {
+			"value": ""
+		},
 		"DLSTargetProviderFunction_properties_typeProperties_functionAppUrl": {
-			"value": "https://dlstargetprovider20201125160234.azurewebsites.net"
+			"value": "https://traniningfunctionappsiraj.azurewebsites.net"
 		},
 		"TrainingAzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://trainingsirajkv.vault.azure.net/"
+		},
+		"OrganizedDataLakeConnection_properties_typeProperties_url": {
+			"value": "https://traniningsirajdls.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"value": ""

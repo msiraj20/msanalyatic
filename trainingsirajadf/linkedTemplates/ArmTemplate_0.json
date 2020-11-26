@@ -15,13 +15,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'functionKey' of 'DLSTargetProviderFunction'"
 		},
+		"OrganizedDataLakeConnection_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'OrganizedDataLakeConnection'"
+		},
 		"DLSTargetProviderFunction_properties_typeProperties_functionAppUrl": {
 			"type": "string",
-			"defaultValue": "https://dlstargetprovider20201125160234.azurewebsites.net"
+			"defaultValue": "https://traniningfunctionappsiraj.azurewebsites.net"
 		},
 		"TrainingAzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://trainingsirajkv.vault.azure.net/"
+		},
+		"OrganizedDataLakeConnection_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://traniningsirajdls.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -68,6 +76,23 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('TrainingAzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OrganizedDataLakeConnection')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('OrganizedDataLakeConnection_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('OrganizedDataLakeConnection_accountKey')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -157,6 +182,81 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/OrganizedDLSDataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OrganizedDataLakeConnection",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileSystemName": {
+						"type": "string"
+					},
+					"folder": {
+						"type": "string"
+					},
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().fileSystemName",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "orderid",
+						"type": "INT32"
+					},
+					{
+						"name": "orderdate",
+						"type": "UTF8"
+					},
+					{
+						"name": "customer",
+						"type": "INT32"
+					},
+					{
+						"name": "product",
+						"type": "INT32"
+					},
+					{
+						"name": "units",
+						"type": "INT32"
+					},
+					{
+						"name": "billingaddress",
+						"type": "UTF8"
+					},
+					{
+						"name": "remarks",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OrganizedDataLakeConnection')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OrderblobProcesor')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -186,7 +286,8 @@
 								"referenceName": "BlobMetadataDataset",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
+							},
+							"firstRowOnly": false
 						}
 					},
 					{
